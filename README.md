@@ -29,7 +29,8 @@ The public repository is intended to showcase the application architecture, inte
 - `Fast` and `Deep` answer paths
 - Compact desktop overlay UI
 - Custom app branding and Windows executable packaging
-- API routing and fallback support
+- Multi-API support with ordered fallback routing
+- API routing and failover support across multiple configured providers/keys
 - Vosk-based speech transcription pipeline
 
 ## Tech Stack
@@ -48,7 +49,8 @@ The public repository is intended to showcase the application architecture, inte
 2. Voice input is transcribed into text.
 3. The selected mode shapes how the prompt is constructed.
 4. Screenshot context and/or transcript context are sent to the AI service.
-5. The response is shown inside a compact desktop overlay.
+5. The app can move through a multi-API fallback chain when configured, helping maintain continuity when one configured endpoint is unavailable.
+6. The response is shown inside a compact desktop overlay.
 
 ## Project Structure
 
@@ -101,6 +103,8 @@ OPENROUTER_API_KEY=
 
 Do not commit real API keys to the repository.
 
+The app supports a multi-API configuration model, including primary and fallback keys, so local users can configure ordered failover behavior in their own environment.
+
 ## Run the App
 
 ```powershell
@@ -131,6 +135,7 @@ Additional work in this version includes:
 - UI and interaction redesign
 - screenshot and voice workflow changes
 - mode-based prompting
+- multi-API routing and fallback chain support
 - API routing and failover behavior
 - desktop overlay refinements
 
