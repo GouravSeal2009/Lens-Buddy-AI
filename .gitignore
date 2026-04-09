@@ -1,0 +1,52 @@
+# Node.js
+node_modules/
+dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Dependency directories
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# IDE-specific files
+.idea/
+.vscode/
+*.swp
+*.bak
+*.swo
+
+# Test coverage
+coverage/
+
+# Thumbnails
+.DS_Store
+Thumbs.db
+
+.claude/
+
+.stealth_screenshots/
+
+# Local project artifacts not meant for public upload
+logs.txt
+repomix-output.txt
+Synopsysis.docx
