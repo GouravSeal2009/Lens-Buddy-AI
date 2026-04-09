@@ -1,87 +1,139 @@
-# Assets Folder - Chrome Icons Required
+<p align="center">
+  <img src="icon.png" alt="Lens Buddy AI Logo" width="280" />
+</p>
 
-This folder should contain Chrome icon files for building the disguised executable.
+# Lens Buddy AI
 
-## Required Files:
+Lens Buddy AI is a multimodal desktop assistant built with Electron, JavaScript, and speech-to-text integration. It combines screenshot understanding, voice input, and mode-based prompting to deliver fast, structured help inside a lightweight desktop overlay.
 
-1. **chrome.ico** (Windows) - 256x256 or higher
-2. **chrome.icns** (macOS) - For Mac builds
-3. **chrome.png** (Linux) - 512x512 for Linux builds
+## Overview
 
-## How to Get Chrome Icons:
+This project explores how AI can be integrated into a practical desktop workflow rather than a standard chat interface. Instead of relying on only typed prompts, the app works with:
 
-### Method 1: Extract from Chrome Installation
+- on-screen context through screenshots
+- voice input through speech transcription
+- mode-specific prompting for different tasks
+- compact overlay-based interaction
 
-**Windows:**
-1. Navigate to: `C:\Program Files\Google\Chrome\Application\`
-2. Find `chrome.exe`
-3. Right-click → Properties → Icons tab
-4. Use a tool like [ResourceHacker](http://www.angusj.com/resourcehacker/) to extract
-5. Save as `chrome.ico` in this folder
+The public repository is intended to showcase the application architecture, interface design, voice pipeline, and multimodal workflow. Users should provide their own local configuration for API-backed features.
 
-### Method 2: Download from Icon Sites
+## Features
 
-**Recommended Sites:**
-- https://icon-icons.com/icon/chrome/194617
-- https://www.iconfinder.com/icons/386254/chrome_icon
-- https://icons8.com/icons/set/chrome
+- Screen-aware AI assistance through screenshot capture and analysis
+- Voice-driven queries and transcript-based interaction
+- Multiple working modes:
+  - `Productivity`
+  - `Explain`
+  - `Coding`
+  - `Meeting`
+- `Fast` and `Deep` answer paths
+- Compact desktop overlay UI
+- Custom app branding and Windows executable packaging
+- API routing and fallback support
+- Vosk-based speech transcription pipeline
 
-**Download Requirements:**
-- **Windows**: ICO format, 256x256 pixels minimum
-- **macOS**: ICNS format (if building for Mac)
-- **Linux**: PNG format, 512x512 pixels
+## Tech Stack
 
-### Method 3: Use Online Converter
+- Electron
+- JavaScript
+- HTML/CSS
+- Node.js
+- Vosk
+- screenshot-desktop
+- Google Generative AI SDK
 
-If you have a Chrome PNG:
-1. Go to: https://convertio.co/png-ico/
-2. Upload Chrome PNG (high resolution)
-3. Convert to ICO (256x256)
-4. Download and save as `chrome.ico`
+## How It Works
 
-## File Placement:
+1. The app captures visible screen content or receives a voice query.
+2. Voice input is transcribed into text.
+3. The selected mode shapes how the prompt is constructed.
+4. Screenshot context and/or transcript context are sent to the AI service.
+5. The response is shown inside a compact desktop overlay.
 
-After obtaining the icons, your folder should look like:
-```
-d:\Open-Cluely\assets\
-  ├── chrome.ico     ← Windows icon (REQUIRED for building)
-  ├── chrome.icns    ← macOS icon (optional)
-  ├── chrome.png     ← Linux icon (optional)
-  └── README.md      ← This file
-```
+## Project Structure
 
-## Verification:
-
-Before building, verify:
-- [ ] `chrome.ico` exists in this folder
-- [ ] Icon is 256x256 or higher resolution
-- [ ] Icon looks like the official Chrome logo
-
-## Quick Build Test:
-
-After adding icons, test the build:
-```bash
-npm run build
+```text
+src/            Main Electron app logic, renderer UI, and IPC bridge
+assets/         App assets and packaged icon files
+icon.png        Project logo / branding image
+vosk_live.py    Speech transcription helper
+transcribe.py   Supporting transcription script
+package.json    App configuration and build settings
 ```
 
-If successful, you should see:
-- `dist/GoogleChrome.exe` with Chrome icon
-- Icon visible in File Explorer
-- Icon shows in Task Manager
+## Local Setup
 
-## Troubleshooting:
+### Prerequisites
 
-**Icon doesn't show:**
-- Make sure filename is exactly `chrome.ico`
-- Check file is in ICO format (not renamed PNG)
-- Resolution must be 256x256 or higher
-- Try rebuilding with `--clean` flag
+- Node.js
+- Python 3
+- pip packages:
+  - `vosk`
+  - `sounddevice`
+  - `requests`
 
-**Can't find Chrome icon:**
-- Check `C:\Program Files\Google\Chrome\Application\chrome.exe`
-- Use ResourceHacker to extract icon from chrome.exe
-- Or download from icon sites listed above
+### Install
 
----
+```powershell
+npm install
+```
 
-**Note:** This is for educational purposes and authorized use only.
+Install Python dependencies:
+
+```powershell
+pip install vosk sounddevice requests
+```
+
+### Environment Setup
+
+Copy `.env.example` to `.env` and fill in your own keys:
+
+```env
+GEMINI_API_KEY=
+GEMINI_API_KEY_FREE=
+GEMINI_API_KEY_PAID=
+GEMINI_API_KEY_PAID_FALLBACK=
+GEMINI_API_KEY_PAID_FALLBACK_2=
+GEMINI_API_KEY_PAID_FALLBACK_3=
+GEMINI_API_KEY_PAID_FALLBACK_4=
+OPENROUTER_API_KEY=
+```
+
+Do not commit real API keys to the repository.
+
+## Run the App
+
+```powershell
+npm start
+```
+
+## Build the Windows Executable
+
+```powershell
+npm run build -- --win portable
+```
+
+The portable build is generated in `dist/`.
+
+## Notes for Public Use
+
+- This repository should remain secret-free.
+- Real API keys should stay only in local `.env`.
+- Build output, local logs, and development artifacts should not be pushed to GitHub.
+
+## Credits
+
+This project was adapted and extended from the open-source base [Open-Cluely](https://github.com/shubhamshnd/Open-Cluely) by [shubhamshnd](https://github.com/shubhamshnd).
+
+Additional work in this version includes:
+
+- rebranding and packaging
+- UI and interaction redesign
+- screenshot and voice workflow changes
+- mode-based prompting
+- API routing and failover behavior
+- desktop overlay refinements
+
+## Disclaimer
+
+This repository is presented as a desktop AI productivity and experimentation project. Users are responsible for configuring and using the software appropriately in their own environment.
