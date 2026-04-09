@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lens Buddy AI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="glass-container">
+    <div id="top-drag-zone" class="top-drag-zone"></div>
+    <div class="window-controls">
+      <button id="hide-window-btn" class="hide-window-btn" title="Minimize/Hide">-</button>
+      <button id="close-app-btn" class="close-app-btn" title="Close App">&times;</button>
+    </div>
+    <div class="mode-switcher">
+      <button id="mode-general" class="mode-btn active" title="General productivity help">Productivity</button>
+      <button id="mode-interview" class="mode-btn" title="Answer with explanation">Explain</button>
+      <button id="mode-coding" class="mode-btn" title="Coding and debugging help">Coding</button>
+      <button id="mode-meeting" class="mode-btn" title="Meeting summary and notes">Meeting</button>
+    </div>
+    <div class="tier-switcher">
+      <button id="tier-fast" class="tier-btn active" title="Single-pass faster answers">Fast</button>
+      <button id="tier-deep" class="tier-btn" title="Verified multi-pass answers">Deep</button>
+    </div>
+    <div id="api-milestones" class="api-milestones" aria-label="Active API chain"></div>
+    <!-- Compact Interface - Horizontal Layout like Cluely -->
+    <div class="main-interface">
+      <!-- Status Section with Timer and Count -->
+      <div class="status-section">
+        <div class="status-dot"></div>
+        <span class="timer">00:00</span>
+        <div class="screenshot-count" id="screenshot-count">0</div>
+        <div id="processing-indicator" class="processing-indicator hidden">
+          <span class="processing-pulse"></span>
+          <span class="processing-text">Thinking</span>
+        </div>
+      </div>
+      
+      <!-- Action Buttons - Compact -->
+      <div class="content-section">
+        <div class="action-buttons">
+          <button id="voice-toggle" class="action-btn voice-btn" title="Mic">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <path d="M12 19v4"/>
+              <path d="M8 23h8"/>
+            </svg>
+          </button>
+
+          <button id="screenshot-btn" class="action-btn screenshot-btn" title="Capture Screenshot">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 2 7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+            </svg>
+          </button>
+
+          <button id="analyze-btn" class="action-btn analyze-btn" title="Ask AI">
+            Ask AI
+          </button>
+
+          <button id="suggest-btn" class="action-btn suggest-btn" title="Suggestions">
+            💡
+          </button>
+
+          <button id="notes-btn" class="action-btn notes-btn" title="Notes">
+            📝
+          </button>
+
+          <button id="insights-btn" class="action-btn insights-btn" title="Insights">
+            📊
+          </button>
+
+          <button id="clear-btn" class="action-btn clear-btn" title="Clear">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+            </svg>
+          </button>
+
+          <button id="hide-btn" class="action-btn hide-btn" title="Emergency Hide">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 1 0-1.42 1.42L10.59 12l-4.9 4.89a1 1 0 0 0 1.42 1.42L12 13.41l4.89 4.9a1 1 0 0 0 1.42-1.42L13.41 12l4.9-4.89a1 1 0 0 0 0-1.4Z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Chat Interface -->
+    <div id="chat-container" class="chat-container">
+      <div class="chat-header">
+        <span class="chat-title">🤖 Lens Buddy AI</span>
+        <div class="chat-controls">
+          <button id="copy-btn" class="copy-btn" title="Copy Response">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="chat-messages" class="chat-messages">
+        <!-- Messages will be added here dynamically -->
+      </div>
+      <div id="chat-scrollbar" class="chat-scrollbar">
+        <button id="chat-scroll-up" class="chat-scroll-btn" aria-label="Scroll up">▲</button>
+        <div id="chat-scroll-track" class="chat-scroll-track">
+          <div id="chat-scroll-thumb" class="chat-scroll-thumb"></div>
+        </div>
+        <button id="chat-scroll-down" class="chat-scroll-btn" aria-label="Scroll down">▼</button>
+      </div>
+    </div>
+    
+    <!-- Hidden status text for feedback -->
+    <div id="status-text" class="status-text" style="display: none;">Lens Buddy AI</div>
+    
+    <!-- Expandable Results Panel (Legacy - now using chat) -->
+    <div id="results-panel" class="results-panel hidden">
+      <div class="results-header">
+        <div class="results-title">
+          <span class="ai-response-icon">✨</span>
+          <span>AI Response</span>
+        </div>
+      </div>
+      <div class="results-content">
+        <div id="result-text" class="result-text"></div>
+      </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+      <div class="loading-content">
+        <div class="analyzing-icon">🧠</div>
+        <div class="loading-text">Analyzing screen...</div>
+      </div>
+    </div>
+    
+    <div id="resize-handle" class="resize-handle"></div>
+
+    <!-- Emergency Overlay -->
+    <div id="emergency-overlay" class="emergency-overlay hidden">
+      <div class="emergency-message">HIDDEN</div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
