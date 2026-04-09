@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.png" alt="Lens Buddy AI Logo" width="280" />
+  <img src="icon.png" alt="Lens Buddy AI Logo" width="180" />
 </p>
 
 # Lens Buddy AI
